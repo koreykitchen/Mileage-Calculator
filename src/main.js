@@ -1,4 +1,4 @@
-'use strict';
+import React from 'react';
 
 import Week from './week.js'
 
@@ -22,5 +22,4 @@ class Main extends React.Component
   }
 }
 
-ReactDOM.render(<Main />, document.getElementById("React-App"));
-
+export default Main;

@@ -1,4 +1,4 @@
-'use strict';
+import React from 'react';
 
 import LocationSelect from './locationSelect.js';
 import Day from './day.js';

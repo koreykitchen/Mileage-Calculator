@@ -1,4 +1,4 @@
-'use strict';
+import React from 'react';
 
 class LocationSelect extends React.Component 
 {
@@ -13,7 +13,7 @@ class LocationSelect extends React.Component
   {
     return (
         <div class="bordered-div">
-          <p>Inside LocationSelect Div</p>
+          <p>Inside Location Select Div</p>
         </div>
     );
   }
