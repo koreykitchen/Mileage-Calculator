@@ -1,23 +1,22 @@
 {
   "files": {
-    "main.css": "/Mileage-Calculator/static/css/main.c9eed4fa.chunk.css",
-    "main.js": "/Mileage-Calculator/static/js/main.d4c9c4f2.chunk.js",
-    "main.js.map": "/Mileage-Calculator/static/js/main.d4c9c4f2.chunk.js.map",
+    "main.css": "/Mileage-Calculator/static/css/main.af8b8fc0.chunk.css",
+    "main.js": "/Mileage-Calculator/static/js/main.ac7071d7.chunk.js",
+    "main.js.map": "/Mileage-Calculator/static/js/main.ac7071d7.chunk.js.map",
     "runtime-main.js": "/Mileage-Calculator/static/js/runtime-main.1eaaa597.js",
     "runtime-main.js.map": "/Mileage-Calculator/static/js/runtime-main.1eaaa597.js.map",
-    "static/js/2.4809751f.chunk.js": "/Mileage-Calculator/static/js/2.4809751f.chunk.js",
-    "static/js/2.4809751f.chunk.js.map": "/Mileage-Calculator/static/js/2.4809751f.chunk.js.map",
+    "static/js/2.7d3866c3.chunk.js": "/Mileage-Calculator/static/js/2.7d3866c3.chunk.js",
+    "static/js/2.7d3866c3.chunk.js.map": "/Mileage-Calculator/static/js/2.7d3866c3.chunk.js.map",
     "index.html": "/Mileage-Calculator/index.html",
-    "precache-manifest.3230eda86ac63b673af7dd5bab64fa2f.js": "/Mileage-Calculator/precache-manifest.3230eda86ac63b673af7dd5bab64fa2f.js",
+    "precache-manifest.53836ecee40b9e9f2ac67513b5344d78.js": "/Mileage-Calculator/precache-manifest.53836ecee40b9e9f2ac67513b5344d78.js",
     "service-worker.js": "/Mileage-Calculator/service-worker.js",
-    "static/css/main.c9eed4fa.chunk.css.map": "/Mileage-Calculator/static/css/main.c9eed4fa.chunk.css.map",
-    "static/js/2.4809751f.chunk.js.LICENSE.txt": "/Mileage-Calculator/static/js/2.4809751f.chunk.js.LICENSE.txt",
-    "static/media/logo.svg": "/Mileage-Calculator/static/media/logo.5d5d9eef.svg"
+    "static/css/main.af8b8fc0.chunk.css.map": "/Mileage-Calculator/static/css/main.af8b8fc0.chunk.css.map",
+    "static/js/2.7d3866c3.chunk.js.LICENSE.txt": "/Mileage-Calculator/static/js/2.7d3866c3.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.1eaaa597.js",
-    "static/js/2.4809751f.chunk.js",
-    "static/css/main.c9eed4fa.chunk.css",
-    "static/js/main.d4c9c4f2.chunk.js"
+    "static/js/2.7d3866c3.chunk.js",
+    "static/css/main.af8b8fc0.chunk.css",
+    "static/js/main.ac7071d7.chunk.js"
   ]
 }
