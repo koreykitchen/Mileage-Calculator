@@ -14,10 +14,19 @@ class Main extends React.Component
   render() 
   {
     return (
-        <div class="bordered-div">
-          <p>Week Div</p>
-          <Week />
-        </div>
+      <div>
+
+        <h1>Mileage Calculator</h1>
+
+        <p>A Note Before Using:</p>
+          
+        <p>Mileage calculator is still in development, and therefore may be prone to bugs and crashes...</p>
+
+        <p>Some functionality may be missing or incomplete...</p>
+
+        <Week />
+
+      </div>
     );
   }
 }

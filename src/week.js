@@ -9,24 +9,41 @@ class Week extends React.Component
     {
         super(props);
 
-        this.state = {  days: [] };
+        this.state = {  currentDay: "Sunday"  };
     }
 
     render() 
     {
         return (
             <div class="bordered-div">
-                <div class="bordered-div">
-                <p>Location Select Div</p>
-                <LocationSelect />
-                </div>
 
-                <div class="bordered-div">
-                <p>Day Div</p>
+                {this.setupWeekdayTabs()}
+
+                <button onclick="" style={{marginLeft:'25px'}}>Total Mileage</button>
+
+                <LocationSelect day={this.state.currentDay}/>
+
                 <Day />
-                </div>
+
             </div>
         );
+    }
+
+    setupWeekdayTabs()
+    {
+        var days = ["Sunday", "Monday", "Tuesday", "Wednesday",
+                    "Thursday", "Friday", "Saturday"];
+
+        return days.map((day, index) => (<button onClick={() => this.setCurrentDayTab(index)} 
+                                                style={{margin:'1px'}}>{day}</button>));
+    }
+
+    setCurrentDayTab(index)
+    {
+        var days = ["Sunday", "Monday", "Tuesday", "Wednesday",
+                    "Thursday", "Friday", "Saturday"];
+
+        this.setState({ currentDay: days[index] });
     }
 }
 

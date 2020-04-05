@@ -16,7 +16,8 @@ class Location extends React.Component
     {
         return (
             <div class="bordered-div">
-                <p>Inside Location Div</p>
+                <p>Test Location</p>
+                <button onClick="" style={{color: 'red'}}>Remove</button>
             </div>
         );
     }

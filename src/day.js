@@ -8,17 +8,33 @@ class Day extends React.Component
     {
         super(props);
 
-        this.state = {  locations: [] };
+        this.state = {  numberOfStops: 3 };
     }
 
     render() 
     {
         return (
             <div class="bordered-div">
-                <p>Location Div</p>
-                <Location />
+
+                <p>{this.state.numberOfStops} stop(s) added to the day...</p>
+
+                {this.populateLocationsHtml()}
+
             </div>
         );
+    }
+
+    populateLocationsHtml()
+    {
+        if (this.state.numberOfStops === 0)
+        {
+            return;
+        }
+
+        else
+        {
+            return Array(this.state.numberOfStops).fill(null).map((_) => (<Location />));
+        }
     }
 }
 

@@ -6,14 +6,23 @@ class LocationSelect extends React.Component
   {
     super(props);
 
-    this.state = {  listOfLocations: [] };
+    this.state = { };
   }
 
   render() 
   {
     return (
-        <div class="bordered-div">
-          <p>Inside Location Select Div</p>
+        <div>
+                    
+          <p>Select a stop to add to your <span style={{fontWeight: 'bold'}}>
+              {this.props.day}</span> route: </p>
+
+          <select style={{width:'75vw'}}>
+
+          </select>
+
+          <button onClick="" style={{marginLeft: '25px'}}>Add Stop</button>
+
         </div>
     );
   }
