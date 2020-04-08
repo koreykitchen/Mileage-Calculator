@@ -15,12 +15,18 @@ class Location extends React.Component
     render() 
     {
         return (
-            <div class="bordered-div">
+            <div className="bordered-div">
                 <p>Test Location</p>
-                <button onClick="" style={{color: 'red'}}>Remove</button>
+                <button onClick={this.removeStop} style={{color: 'red'}}>Remove</button>
             </div>
         );
+    }
+
+    removeStop()
+    {
+
     }
 }
 
 export default Location;
+

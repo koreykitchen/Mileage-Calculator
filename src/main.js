@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Week from './week.js'
+import Week from './week.js';
 
 class Main extends React.Component 
 {
@@ -8,7 +8,7 @@ class Main extends React.Component
   {
     super(props);
 
-    this.state = { };
+    this.state = { storeData: this.props.data };
   }
 
   render() 
@@ -24,7 +24,7 @@ class Main extends React.Component
 
         <p>Some functionality may be missing or incomplete...</p>
 
-        <Week />
+        <Week data={this.state.storeData}/>
 
       </div>
     );
@@ -32,3 +32,4 @@ class Main extends React.Component
 }
 
 export default Main;
+

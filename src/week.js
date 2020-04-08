@@ -1,6 +1,7 @@
 import React from 'react';
 
 import LocationSelect from './locationSelect.js';
+
 import Day from './day.js';
 
 class Week extends React.Component 
@@ -15,13 +16,14 @@ class Week extends React.Component
     render() 
     {
         return (
-            <div class="bordered-div">
+            <div className="bordered-div">
 
                 {this.setupWeekdayTabs()}
 
-                <button onclick="" style={{marginLeft:'25px'}}>Total Mileage</button>
+                <button onClick={this.totalMiles}  
+                        style={{marginLeft:'25px'}}>Total Mileage</button>
 
-                <LocationSelect day={this.state.currentDay}/>
+                <LocationSelect day={this.state.currentDay} data={this.props.data}/>
 
                 <Day />
 
@@ -34,7 +36,8 @@ class Week extends React.Component
         var days = ["Sunday", "Monday", "Tuesday", "Wednesday",
                     "Thursday", "Friday", "Saturday"];
 
-        return days.map((day, index) => (<button onClick={() => this.setCurrentDayTab(index)} 
+        return days.map((day, index) => (<button key={day}
+                                                onClick={() => this.setCurrentDayTab(index)} 
                                                 style={{margin:'1px'}}>{day}</button>));
     }
 
@@ -45,6 +48,12 @@ class Week extends React.Component
 
         this.setState({ currentDay: days[index] });
     }
+
+    totalMiles()
+    {
+
+    }
 }
 
 export default Week;
+

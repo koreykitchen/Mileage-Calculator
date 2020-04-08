@@ -14,7 +14,7 @@ class Day extends React.Component
     render() 
     {
         return (
-            <div class="bordered-div">
+            <div className="bordered-div">
 
                 <p>{this.state.numberOfStops} stop(s) added to the day...</p>
 
@@ -33,9 +33,11 @@ class Day extends React.Component
 
         else
         {
-            return Array(this.state.numberOfStops).fill(null).map((_) => (<Location />));
+            return Array(this.state.numberOfStops)
+                    .fill(null).map((_, index) => (<Location key={index}/>));
         }
     }
 }
 
 export default Day;
+
