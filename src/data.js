@@ -33,7 +33,7 @@ class Data extends React.Component
         /* set up an async GET request */
         var req = new XMLHttpRequest();
 
-        req.open("GET", "koreykitchen.github.io/Mileage-Calculator/StoreList.xlsx", true);
+        req.open("GET", "StoreList.xlsx", true);
 
         req.responseType = "arraybuffer";
 
