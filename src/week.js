@@ -10,7 +10,7 @@ class Week extends React.Component
     {
         super(props);
 
-        this.state = {  currentDay: "Sunday"  };
+        this.state = {  currentDay: "Sunday" , dayData: new Array(7).fill([]) };
     }
 
     render() 
@@ -23,12 +23,36 @@ class Week extends React.Component
                 <button onClick={this.totalMiles}  
                         style={{marginLeft:'25px'}}>Total Mileage</button>
 
-                <LocationSelect day={this.state.currentDay} data={this.props.data}/>
+                <LocationSelect currentDay={this.state.currentDay} 
+                                storeListData={this.props.storeListData}
+                                addSelectedStoreToCurrentDay={this.addSelectedStoreToCurrentDay}/>
 
-                <Day />
+                <Day data={this.state.dayData[this.getDaysData()]} callback={this.setDayData}/>
 
             </div>
         );
+    }
+
+    addSelectedStoreToCurrentDay(storeToAdd)
+    {
+        console.log(storeToAdd);
+    }
+
+    setDayData(daysData)
+    {
+        var tempDayData = this.state.dayData;
+
+        tempDayData[this.getDaysData()] = daysData;
+
+        this.setState({dayData: tempDayData});
+    }
+
+    getDaysData()
+    {
+        var days = ["Sunday", "Monday", "Tuesday", "Wednesday",
+                    "Thursday", "Friday", "Saturday"];
+
+        return days.findIndex((day) => (day === this.state.currentDay));
     }
 
     setupWeekdayTabs()

@@ -8,7 +8,7 @@ class Main extends React.Component
   {
     super(props);
 
-    this.state = { storeData: this.props.data };
+    this.state = { };
   }
 
   render() 
@@ -24,7 +24,7 @@ class Main extends React.Component
 
         <p>Some functionality may be missing or incomplete...</p>
 
-        <Week data={this.state.storeData}/>
+        <Week storeListData={this.props.storeListData}/>
 
       </div>
     );

@@ -10,68 +10,68 @@ class Data extends React.Component
     {
         super(props);
 
-        this.state = {storeData: [], loaded: false};
+        this.state = { storeListData: [], dataHasBeenLoaded: false }; 
+    }
 
-        this.getListOfStores(this.populateSelect, this);
+    componentDidMount()
+    {
+        this.getStoreListData(this.callbackFunctionToStoreData, this);
     }
 
     render()
     {
-        if(!this.state.loaded)
+        if(!this.state.dataHasBeenLoaded)
         {
-            return (<h3>LOADING...</h3>);
+            return (<h1 style={{textAlign: 'center', padding: '100px'}}>LOADING...</h1>);
         }
 
         else
         {
-            return (<Main data={this.state.storeData} />);
+            return (<Main storeListData={this.state.storeListData} />);
         }
     }
 
-    getListOfStores(callback, dataClass)
+    getStoreListData(callbackFunction, dataClassObject)
     {
-        /* set up an async GET request */
-        var req = new XMLHttpRequest();
+        var request = new XMLHttpRequest();
 
-        req.open("GET", "https://koreykitchen.github.io/Mileage-Calculator/StoreList.xlsx", true);
+        request.open("GET", "https://koreykitchen.github.io/Mileage-Calculator/StoreList.xlsx", true);
 
-        req.responseType = "arraybuffer";
+        request.responseType = "arraybuffer";
 
-        req.onload = function() 
+        request.onload = function() 
         {
-            callback(req.response, dataClass);
+            callbackFunction(request.response, dataClassObject);
         };
 
-        req.send();
+        request.send();
     }
 
-    populateSelect(result, dataClass)
+    callbackFunctionToStoreData(dataToStore, dataClassObject)
     {
-        /* parse the data when it is received */
-        var data = new Uint8Array(result);
+        var rawData = new Uint8Array(dataToStore);
 
-        var workbook = XLSX.read(data, {type:"array"});
+        var workbook = XLSX.read(rawData, {type:"array"});
 
-        /* DO SOMETHING WITH workbook HERE */
-        var first_worksheet = workbook.Sheets[workbook.SheetNames[0]];
+        var worksheet = workbook.Sheets[workbook.SheetNames[0]];
 
-        var jsonData = XLSX.utils.sheet_to_json(first_worksheet, {blankrows:false});
+        var jsonStoreListData = XLSX.utils.sheet_to_json(worksheet, {blankrows:false});
 
-        jsonData = jsonData.filter(store => (store.Name));
+        jsonStoreListData = jsonStoreListData.filter(storeObject => (storeObject.Name));
 
-        jsonData = jsonData.sort((a, b) =>
+        jsonStoreListData = jsonStoreListData.sort((firstStore, secondStore) =>
                                     {
-                                        var storeA = a.Name.toUpperCase();
-                                        var storeB = b.Name.toUpperCase();
+                                        var firstStoreName = firstStore.Name.toUpperCase();
+                                        var secondStoreName = secondStore.Name.toUpperCase();
 
                                         var comparison = 0;
 
-                                        if (storeA > storeB) 
+                                        if (firstStoreName > secondStoreName) 
                                         {
                                             comparison = 1;
                                         } 
 
-                                        else if (storeA < storeB) 
+                                        else if (firstStoreName < secondStoreName) 
                                         {
                                             comparison = -1;
                                         }
@@ -80,15 +80,7 @@ class Data extends React.Component
                                     }
                                 );
 
-        dataClass.setState({storeData: jsonData, loaded: true}); //console.log(jsonData);
-
-        /*
-        dataClass.state.storeData = jsonData;
-        dataClass.state.loaded = true;
-
-        */
-
-        
+        dataClassObject.setState({ storeListData: jsonStoreListData, dataHasBeenLoaded: true });
     }
 }
 

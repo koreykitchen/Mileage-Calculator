@@ -6,10 +6,7 @@ class Location extends React.Component
     {
         super(props);
 
-        this.state = {  venue: "",
-                        address: "",
-                        city: "",
-                        state: "" };
+        this.state = { };
     }
 
     render() 

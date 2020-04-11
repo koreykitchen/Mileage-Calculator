@@ -14,33 +14,32 @@ class LocationSelect extends React.Component
     return (
         <div>
                     
-          <p>Select a stop to add to your <span style={{fontWeight: 'bold'}}>
-              {this.props.day}</span> route: </p>
+          <p>Select a store to add to your <span style={{fontWeight: 'bold'}}>
+              {this.props.currentDay}</span> route: </p>
 
-          <select style={{width:'75vw'}}>
+          <select id='locationSelectElement' style={{width:'75vw'}}>
 
-            {this.populateSelect()}
+            {this.populateSelectElement()}
 
           </select>
 
-          <button onClick={() => (this.addStop(this.props.data))} style={{marginLeft: '25px'}}>Add Stop</button>
-
-          <br />
+          <button onClick={() => this.addSelectedStoreToDay()} 
+                  style={{marginLeft: '25px'}}>Add Store</button>
 
         </div>
     );
   }
 
-  populateSelect()
+  populateSelectElement()
   {
-    return this.props.data.map((_, index) => 
+    return this.props.storeListData.map((storeObject, index) => 
                 {
-                    if(this.props.data[index].Name)
+                    if(storeObject.Name)
                     {
                       return (<option key={index} value={index}>
-                                {this.props.data[index].Name + ' - ' + 
-                                  this.props.data[index].Address +
-                                  ' - ' + this.props.data[index].City}</option>);
+                                {storeObject.Name + ' - ' + storeObject.Address +
+                                  ' - ' + storeObject.City}
+                              </option>);
                     }
 
                     else
@@ -51,9 +50,15 @@ class LocationSelect extends React.Component
 
   }
 
-  addStop(data)
+  addSelectedStoreToDay()
   {
-    console.log(data);
+    var selectElement = document.getElementById("locationSelectElement");
+
+    var storeToAddIndex = selectElement.options[selectElement.selectedIndex].value;
+    
+    var storeToAdd = this.props.storeListData[storeToAddIndex];
+
+    this.props.addSelectedStoreToCurrentDay(storeToAdd);
   }
 }
 
