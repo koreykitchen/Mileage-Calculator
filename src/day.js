@@ -51,8 +51,18 @@ class Day extends React.Component
                     .fill(null)
                     .map((_, index) => 
                             (<Location  key={index} 
-                                        storeData={daysData[index]} />));
+                                        storeData={daysData[index]}
+                                        removeStore={() => (this.removeStore(index))} />));
         }
+    }
+
+    removeStore(index)
+    {
+        var currentDaysData = [...this.props.weekDataObject.state.currentDaysData];
+
+        currentDaysData.splice(index, 1);
+
+        this.props.weekDataObject.setDaysData(currentDaysData, this.props.weekDataObject.state.currentDay);
     }
 }
 

@@ -24,7 +24,7 @@ class Week extends React.Component
 
                 {this.setupWeekdayTabs()}
 
-                <button onClick={() => (this.totalMiles())}  
+                <button onClick={() => (this.calculateTotalMiles())}  
                         style={{marginLeft:'25px'}}>Total Mileage</button>
 
                 <LocationSelect currentDay={this.state.currentDay} 
@@ -82,7 +82,7 @@ class Week extends React.Component
     }
 
     //TODO
-    totalMiles()
+    calculateTotalMiles()
     {
 
     }
