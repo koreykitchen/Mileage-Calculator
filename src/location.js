@@ -13,8 +13,12 @@ class Location extends React.Component
     {
         return (
             <div className="bordered-div">
-                <p>Test Location</p>
-                <button onClick={this.removeStop} style={{color: 'red'}}>Remove</button>
+
+                {this.props.storeData.Name + ' - ' + this.props.storeData.Address +
+                    ' - ' + this.props.storeData.City}
+
+                <button onClick={this.removeStop} style={{color: 'red', float: 'right'}}>Remove</button>
+
             </div>
         );
     }

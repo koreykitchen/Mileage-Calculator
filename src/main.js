@@ -24,7 +24,7 @@ class Main extends React.Component
 
         <p>Some functionality may be missing or incomplete...</p>
 
-        <Week storeListData={this.props.storeListData}/>
+        <Week storeListData={this.props.storeListData} />
 
       </div>
     );

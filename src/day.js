@@ -8,33 +8,50 @@ class Day extends React.Component
     {
         super(props);
 
-        this.state = {  numberOfStops: 3 };
+        var numberOfStores = this.props.weekDataObject.state.currentDaysData.length;
+
+        this.state = {  numberOfStores: numberOfStores };
+    }
+
+    componentDidUpdate()
+    {
+        var numberOfStores = this.props.weekDataObject.state.currentDaysData.length;
+
+        if(this.state.numberOfStores !== numberOfStores)
+        {
+            this.setState({ numberOfStores: numberOfStores });
+        }
     }
 
     render() 
     {
+        var currentDaysData = [...this.props.weekDataObject.state.currentDaysData];
+
         return (
             <div className="bordered-div">
 
-                <p>{this.state.numberOfStops} stop(s) added to the day...</p>
+                <p>{this.state.numberOfStores} store(s) added to the day...</p>
 
-                {this.populateLocationsHtml()}
+                {this.populateLocationsHtml(currentDaysData)}
 
             </div>
         );
     }
 
-    populateLocationsHtml()
+    populateLocationsHtml(daysData)
     {
-        if (this.state.numberOfStops === 0)
+        if (daysData.length === 0)
         {
-            return;
+            return [];
         }
 
         else
         {
-            return Array(this.state.numberOfStops)
-                    .fill(null).map((_, index) => (<Location key={index}/>));
+            return Array(daysData.length)
+                    .fill(null)
+                    .map((_, index) => 
+                            (<Location  key={index} 
+                                        storeData={daysData[index]} />));
         }
     }
 }

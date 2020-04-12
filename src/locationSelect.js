@@ -58,7 +58,7 @@ class LocationSelect extends React.Component
     
     var storeToAdd = this.props.storeListData[storeToAddIndex];
 
-    this.props.addSelectedStoreToCurrentDay(storeToAdd);
+    this.props.addSelectedStoreToCurrentDay(storeToAdd, this.props.weekDataObject);
   }
 }
 

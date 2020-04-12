@@ -10,7 +10,11 @@ class Week extends React.Component
     {
         super(props);
 
-        this.state = {  currentDay: "Sunday" , dayData: new Array(7).fill([]) };
+        this.state = {  currentDay: "Sunday" , arrayOfDaysData: new Array(7).fill([]),
+                        currentDaysData:  []};
+
+        this.arrayOfDayNames =  ["Sunday", "Monday", "Tuesday", "Wednesday",
+                                 "Thursday", "Friday", "Saturday"];
     }
 
     render() 
@@ -20,59 +24,64 @@ class Week extends React.Component
 
                 {this.setupWeekdayTabs()}
 
-                <button onClick={this.totalMiles}  
+                <button onClick={() => (this.totalMiles())}  
                         style={{marginLeft:'25px'}}>Total Mileage</button>
 
                 <LocationSelect currentDay={this.state.currentDay} 
                                 storeListData={this.props.storeListData}
-                                addSelectedStoreToCurrentDay={this.addSelectedStoreToCurrentDay}/>
+                                addSelectedStoreToCurrentDay={this.addSelectedStoreToCurrentDay}
+                                weekDataObject={this} />
 
-                <Day data={this.state.dayData[this.getDaysData()]} callback={this.setDayData}/>
+                <Day weekDataObject={this} /> 
 
             </div>
         );
     }
 
-    addSelectedStoreToCurrentDay(storeToAdd)
+    addSelectedStoreToCurrentDay(storeToAdd, weekDataObject)
     {
-        console.log(storeToAdd);
+        let tempDayData = [...weekDataObject.getDaysData(weekDataObject.state.currentDay)]; 
+
+        tempDayData.push(storeToAdd); 
+
+        weekDataObject.setDaysData(tempDayData, weekDataObject.state.currentDay);
     }
 
-    setDayData(daysData)
+    setDaysData(daysData, dayToSetDataFor)
     {
-        var tempDayData = this.state.dayData;
+        var tempArrayOfDaysData = [...this.state.arrayOfDaysData];
 
-        tempDayData[this.getDaysData()] = daysData;
+        var dayIndex = this.arrayOfDayNames.findIndex((day) => (day === dayToSetDataFor));
 
-        this.setState({dayData: tempDayData});
+        tempArrayOfDaysData[dayIndex] = daysData;
+
+        this.setState({arrayOfDaysData: tempArrayOfDaysData, currentDaysData: daysData});
     }
 
-    getDaysData()
+    getDaysData(dayToGetDataFor)
     {
-        var days = ["Sunday", "Monday", "Tuesday", "Wednesday",
-                    "Thursday", "Friday", "Saturday"];
+        var dayIndex = this.arrayOfDayNames.findIndex((day) => (day === dayToGetDataFor));
 
-        return days.findIndex((day) => (day === this.state.currentDay));
+        return this.state.arrayOfDaysData[dayIndex];
     }
 
     setupWeekdayTabs()
     {
-        var days = ["Sunday", "Monday", "Tuesday", "Wednesday",
-                    "Thursday", "Friday", "Saturday"];
-
-        return days.map((day, index) => (<button key={day}
-                                                onClick={() => this.setCurrentDayTab(index)} 
+        return this.arrayOfDayNames.map((day, index) => 
+                                            (<button key={day}
+                                                onClick={() => (this.setCurrentDay(index))} 
                                                 style={{margin:'1px'}}>{day}</button>));
     }
 
-    setCurrentDayTab(index)
-    {
-        var days = ["Sunday", "Monday", "Tuesday", "Wednesday",
-                    "Thursday", "Friday", "Saturday"];
+    setCurrentDay(dayIndex)
+    {   
+        var toSetCurrentDaysData = [...this.getDaysData(this.arrayOfDayNames[dayIndex])];
 
-        this.setState({ currentDay: days[index] });
+        this.setState({ currentDay: this.arrayOfDayNames[dayIndex], 
+                        currentDaysData: toSetCurrentDaysData});
     }
 
+    //TODO
     totalMiles()
     {
 
