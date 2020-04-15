@@ -4,6 +4,8 @@ import LocationSelect from './locationSelect.js';
 
 import Day from './day.js';
 
+import Distance from './distance.js';
+
 class Week extends React.Component 
 {
     constructor(props) 
@@ -11,7 +13,7 @@ class Week extends React.Component
         super(props);
 
         this.state = {  currentDay: "Sunday" , arrayOfDaysData: new Array(7).fill([]),
-                        currentDaysData:  []};
+                        currentDaysData:  [], totalClicked: false};
 
         this.arrayOfDayNames =  ["Sunday", "Monday", "Tuesday", "Wednesday",
                                  "Thursday", "Friday", "Saturday"];
@@ -27,6 +29,8 @@ class Week extends React.Component
                 <button onClick={() => (this.calculateTotalMiles())}  
                         style={{marginLeft:'25px'}}>Total Mileage</button>
 
+                {this.testDistance()}  
+
                 <LocationSelect currentDay={this.state.currentDay} 
                                 storeListData={this.props.storeListData}
                                 addSelectedStoreToCurrentDay={this.addSelectedStoreToCurrentDay}
@@ -36,6 +40,20 @@ class Week extends React.Component
 
             </div>
         );
+    }
+
+    testDistance()
+    {
+        if (this.state.totalClicked)
+        {
+            return (<Distance   weekDataObject={this} 
+                                ref={(element) => (window.distanceElement = element)}/>);
+        }
+
+        else
+        {
+            return;
+        }
     }
 
     addSelectedStoreToCurrentDay(storeToAdd, weekDataObject)
@@ -84,7 +102,7 @@ class Week extends React.Component
     //TODO
     calculateTotalMiles()
     {
-
+        this.setState({ totalClicked: !this.state.totalClicked });
     }
 }
 

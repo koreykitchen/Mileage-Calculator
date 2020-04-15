@@ -2,13 +2,15 @@ import React from 'react';
 
 import Week from './week.js';
 
+import Distance from './distance.js';
+
 class Main extends React.Component 
 {
   constructor(props) 
   {
     super(props);
 
-    this.state = { };
+    this.state = { weekDisplayed: true };
   }
 
   render() 
@@ -24,10 +26,24 @@ class Main extends React.Component
 
         <p>Some functionality may be missing or incomplete...</p>
 
-        <Week storeListData={this.props.storeListData} />
+        {this.renderWeekOrDistance()}
 
       </div>
     );
+  }
+
+  renderWeekOrDistance()
+  {
+    if(this.state.weekDisplayed)
+    {
+      return (<Week storeListData={this.props.storeListData} />);
+    }
+
+    else
+    {
+      return (<Distance   mainDataObject={this} 
+                          ref={(element) => (window.distanceElement = element)}/>);
+    }
   }
 }
 
