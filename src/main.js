@@ -10,7 +10,7 @@ class Main extends React.Component
   {
     super(props);
 
-    this.state = { weekDisplayed: true };
+    this.state = { weekDisplayed: true,  arrayOfDaysData: new Array(7).fill([])};
   }
 
   render() 
@@ -36,14 +36,74 @@ class Main extends React.Component
   {
     if(this.state.weekDisplayed)
     {
-      return (<Week storeListData={this.props.storeListData} />);
+      return (<Week storeListData={this.props.storeListData}
+                    arrayOfDaysData={this.state.arrayOfDaysData}
+                    swapWeekOrDistanceDisplay={() => this.swapWeekOrDistanceDisplay()}
+                    addLocationFunctions={this.generateAddLocationFunctions()}
+                    removeLocationFunctions={this.generateRemoveLocationFunctions()} />);
     }
 
     else
     {
-      return (<Distance   mainDataObject={this} 
+      return (<Distance   swapWeekOrDistanceDisplay={() => this.swapWeekOrDistanceDisplay()}
+                          arrayOfDaysData={this.state.arrayOfDaysData}
                           ref={(element) => (window.distanceElement = element)}/>);
     }
+  }
+
+  swapWeekOrDistanceDisplay()
+  {
+    this.setState({ weekDisplayed: !this.state.weekDisplayed });
+  }
+
+  addStore(dayIndex, storeToAdd)
+  {
+    var tempArrayOfDaysData = [...this.state.arrayOfDaysData];
+
+    var tempDaysData = [...tempArrayOfDaysData[dayIndex]];
+    
+    tempDaysData.push(storeToAdd);
+
+    tempArrayOfDaysData[dayIndex] = tempDaysData;
+
+    this.setState({arrayOfDaysData: tempArrayOfDaysData});
+  }
+
+  removeStore(dayIndex, storeToRemoveIndex)
+  {
+    var tempArrayOfDaysData = [...this.state.arrayOfDaysData];
+
+    var tempDaysData = [...tempArrayOfDaysData[dayIndex]];
+
+    tempDaysData.splice(storeToRemoveIndex, 1);
+
+    tempArrayOfDaysData[dayIndex] = tempDaysData;
+
+    this.setState({arrayOfDaysData: tempArrayOfDaysData});
+  }
+
+  generateAddLocationFunctions()
+  {
+    return new Array(7).fill(null).map((_, dayIndex) =>
+            (
+                new Array(this.props.storeListData.length)
+                    .fill(null).map((_, storeToAddIndex) => 
+                    (
+                        () => this.addStore(dayIndex, this.props.storeListData[storeToAddIndex])
+                    ))
+            ));
+  }
+
+  generateRemoveLocationFunctions()
+  {
+    return new Array(7).fill(null).map((_, dayIndex) =>
+            (
+                new Array(this.state.arrayOfDaysData[dayIndex].length)
+                    .fill(null).map((_, storeToRemoveIndex) => 
+                    (
+                        () => this.removeStore(dayIndex, storeToRemoveIndex)
+                    ))
+            ));
   }
 }
 

@@ -6,81 +6,102 @@ class Distance extends React.Component
     {
         super(props);
 
-        this.state = { googleMapsHandle: null, loaded: true, status: "LOADING..." }; 
+        this.state = { content: "LOADING..." }; 
     }
 
     componentDidMount()
     {
-        this.getGoogleMapsHandle();
-    }
-
-    render()
-    {
-        if(!this.state.googleMapsHandle)
+        if(!document.getElementById("googleMapsScriptElement"))
         {
-            return (<p>{this.state.status}</p>);
+            var scriptElement = document.createElement('script');
+
+            scriptElement.id = "googleMapsScriptElement";
+
+            scriptElement.src = "https://maps.googleapis.com/maps/api/js?" + 
+                                "key=AIzaSyASFAgyRK86Z88JTF_LlbtUsLTmw0_eNdI";
+
+            scriptElement.onload = this.callbackToRequestMileageCalculation;
+
+            document.body.appendChild(scriptElement);
         }
 
         else
         {
-            if(!this.state.loaded)
-            {
-                var directionsService = new this.state.googleMapsHandle.maps.DirectionsService();
-
-                var start = "Binghamton,NY";
-
-                var end = "Conklin,NY";
-
-                var request = { origin: start, destination: end, travelMode: 'DRIVING'};
-
-                directionsService.route(request, this.callback);
-            }
-
-            return (<p>{this.state.status}</p>);
+            this.requestMileageCalculation();
         }
     }
 
-    callback(result, status)
+    callbackToRequestMileageCalculation()
+    {
+        window.distanceElement.requestMileageCalculation();
+    }
+
+    render()
+    {
+        return (
+        
+            <div className="bordered-div">
+
+                <button onClick={() => 
+                    (this.props.swapWeekOrDistanceDisplay())}>Go Back</button>
+                
+                <p>{this.state.content}</p>
+                
+            </div>
+            
+        );
+    }
+
+    requestMileageCalculation()
+    {
+        var dayIndex = 0;
+
+        if((this.props.arrayOfDaysData[dayIndex].length >= 2) && 
+                ((this.props.arrayOfDaysData[dayIndex].length <= 20))) 
+        {
+            var directionsService = new window.google.maps.DirectionsService();
+
+            directionsService.route(this.buildUpMileageRequestForDay(dayIndex), 
+                                    this.callbackToStoreCalculatedDistance);
+        }
+
+        else
+        {
+            this.setState({ content: "Sunday's number of stores must be between 2 and 20..." });
+        }
+    }
+
+    buildUpMileageRequestForDay(dayIndex)
+    {
+        var startLocation = this.props.arrayOfDaysData[dayIndex][0].Address + "," +
+                            this.props.arrayOfDaysData[dayIndex][0].City;
+
+        var endLocation =   this.props.arrayOfDaysData[dayIndex][1].Address + "," +
+                            this.props.arrayOfDaysData[dayIndex][1].City;
+
+        var mileageRequest = { origin: startLocation, destination: endLocation, travelMode: 'DRIVING'};
+
+        return mileageRequest;
+    }
+
+    callbackToStoreCalculatedDistance(result, status)
     {
         if (status === 'OK') 
         {
-            window.distanceElement.storeDistance(result);
+            window.distanceElement.storeCalculatedDistance(result);
         }
     }
 
-    storeDistance(result)
+    storeCalculatedDistance(result)
     {
-        this.setState({ status: ((Math.round((result.routes[0].legs[0].distance.value * 0.000621371) * 10) / 10) +
-                                    " miles..."), loaded: true });
+        this.setState({ content: ("Distance between Sunday's first two stops:" + 
+            this.convertMetersToMiles(result.routes[0].legs[0].distance.value) + 
+            " miles...") });
     }
 
-    loadGoogleMapsAPI()
+    convertMetersToMiles(meters)
     {
-        return new Promise(function (resolve, reject) 
-        {
-            resolve(window.google);
-
-            reject("Error loading Google Maps API...");
-
-            if(!document.getElementById("googleMapsScriptElement"))
-            {
-                var scriptElement = document.createElement('script');
-
-                scriptElement.id = "googleMapsScriptElement";
-
-                scriptElement.src = "https://maps.googleapis.com/maps/api/js?" + 
-                                    "key=AIzaSyASFAgyRK86Z88JTF_LlbtUsLTmw0_eNdI";
-
-                document.body.appendChild(scriptElement);
-            }
-        });
-    }
-
-    async getGoogleMapsHandle()
-    {
-        var googleMapsHandle = await this.loadGoogleMapsAPI();
-
-        this.setState({ googleMapsHandle: googleMapsHandle});
+        return (Math.round((meters * 0.000621371) * 10) / 10);
     }
 }
 

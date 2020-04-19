@@ -8,31 +8,17 @@ class Day extends React.Component
     {
         super(props);
 
-        var numberOfStores = this.props.weekDataObject.state.currentDaysData.length;
-
-        this.state = {  numberOfStores: numberOfStores };
-    }
-
-    componentDidUpdate()
-    {
-        var numberOfStores = this.props.weekDataObject.state.currentDaysData.length;
-
-        if(this.state.numberOfStores !== numberOfStores)
-        {
-            this.setState({ numberOfStores: numberOfStores });
-        }
+        this.state = { };
     }
 
     render() 
     {
-        var currentDaysData = [...this.props.weekDataObject.state.currentDaysData];
-
         return (
             <div className="bordered-div">
 
-                <p>{this.state.numberOfStores} store(s) added to the day...</p>
+                <p>{this.props.currentDaysData.length} store(s) added to the day...</p>
 
-                {this.populateLocationsHtml(currentDaysData)}
+                {this.populateLocationsHtml([...this.props.currentDaysData])}
 
             </div>
         );
@@ -42,7 +28,7 @@ class Day extends React.Component
     {
         if (daysData.length === 0)
         {
-            return [];
+            return;
         }
 
         else
@@ -52,17 +38,10 @@ class Day extends React.Component
                     .map((_, index) => 
                             (<Location  key={index} 
                                         storeData={daysData[index]}
-                                        removeStore={() => (this.removeStore(index))} />));
+                                        removeStore={() => 
+                                            (this.props.removeLocationFunctions[this.props.currentDayIndex]
+                                                [index]())} />));
         }
-    }
-
-    removeStore(index)
-    {
-        var currentDaysData = [...this.props.weekDataObject.state.currentDaysData];
-
-        currentDaysData.splice(index, 1);
-
-        this.props.weekDataObject.setDaysData(currentDaysData, this.props.weekDataObject.state.currentDay);
     }
 }
 

@@ -6,7 +6,12 @@ class LocationSelect extends React.Component
   {
     super(props);
 
-    this.state = { };
+    this.state = { loaded: false };
+  }
+
+  componentDidMount()
+  {
+    this.setState({ loaded: true });
   }
 
   render() 
@@ -23,7 +28,8 @@ class LocationSelect extends React.Component
 
           </select>
 
-          <button onClick={() => this.addSelectedStoreToDay()} 
+          <button onClick={() => 
+                    (this.props.addLocationFunctions[this.props.currentDayIndex][this.getSelectedIndex()]())} 
                   style={{marginLeft: '25px'}}>Add Store</button>
 
         </div>
@@ -50,15 +56,19 @@ class LocationSelect extends React.Component
 
   }
 
-  addSelectedStoreToDay()
+  getSelectedIndex()
   {
     var selectElement = document.getElementById("locationSelectElement");
 
-    var storeToAddIndex = selectElement.options[selectElement.selectedIndex].value;
-    
-    var storeToAdd = this.props.storeListData[storeToAddIndex];
+    if(selectElement)
+    {
+      return selectElement.options[selectElement.selectedIndex].value;
+    }
 
-    this.props.addSelectedStoreToCurrentDay(storeToAdd, this.props.weekDataObject);
+    else
+    {
+      return 0;
+    }
   }
 }
 
