@@ -1,6 +1,6 @@
 import React from 'react';
 
-class Distance extends React.Component
+class WeekDistance extends React.Component
 {
     constructor(props)
     {
@@ -94,7 +94,7 @@ class Distance extends React.Component
 
     storeCalculatedDistance(result)
     {
-        this.setState({ content: ("Distance between Sunday's first two stops:" + 
+        this.setState({ content: ("Distance between Sunday's first two stops: " + 
             this.convertMetersToMiles(result.routes[0].legs[0].distance.value) + 
             " miles...") });
     }
@@ -105,5 +105,5 @@ class Distance extends React.Component
     }
 }
 
-export default Distance;
+export default WeekDistance;
 

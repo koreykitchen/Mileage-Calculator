@@ -1,8 +1,8 @@
 import React from 'react';
 
-import Week from './week.js';
+import Week from '../Week/week.js';
 
-import Distance from './distance.js';
+import WeekDistance from '../Distance/weekDistance.js';
 
 class Main extends React.Component 
 {
@@ -45,7 +45,7 @@ class Main extends React.Component
 
     else
     {
-      return (<Distance   swapWeekOrDistanceDisplay={() => this.swapWeekOrDistanceDisplay()}
+      return (<WeekDistance   swapWeekOrDistanceDisplay={() => this.swapWeekOrDistanceDisplay()}
                           arrayOfDaysData={this.state.arrayOfDaysData}
                           ref={(element) => (window.distanceElement = element)}/>);
     }
