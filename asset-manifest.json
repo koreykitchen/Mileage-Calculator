@@ -1,22 +1,22 @@
 {
   "files": {
     "main.css": "/Mileage-Calculator/static/css/main.7d15da53.chunk.css",
-    "main.js": "/Mileage-Calculator/static/js/main.e7869bfd.chunk.js",
-    "main.js.map": "/Mileage-Calculator/static/js/main.e7869bfd.chunk.js.map",
+    "main.js": "/Mileage-Calculator/static/js/main.ed7ce462.chunk.js",
+    "main.js.map": "/Mileage-Calculator/static/js/main.ed7ce462.chunk.js.map",
     "runtime-main.js": "/Mileage-Calculator/static/js/runtime-main.1eaaa597.js",
     "runtime-main.js.map": "/Mileage-Calculator/static/js/runtime-main.1eaaa597.js.map",
-    "static/js/2.b6b67544.chunk.js": "/Mileage-Calculator/static/js/2.b6b67544.chunk.js",
-    "static/js/2.b6b67544.chunk.js.map": "/Mileage-Calculator/static/js/2.b6b67544.chunk.js.map",
+    "static/js/2.6cf8d9aa.chunk.js": "/Mileage-Calculator/static/js/2.6cf8d9aa.chunk.js",
+    "static/js/2.6cf8d9aa.chunk.js.map": "/Mileage-Calculator/static/js/2.6cf8d9aa.chunk.js.map",
     "index.html": "/Mileage-Calculator/index.html",
-    "precache-manifest.cd4419403f4f86cc75a7159758d4a855.js": "/Mileage-Calculator/precache-manifest.cd4419403f4f86cc75a7159758d4a855.js",
+    "precache-manifest.c67e09395d35d84962538634d110de2f.js": "/Mileage-Calculator/precache-manifest.c67e09395d35d84962538634d110de2f.js",
     "service-worker.js": "/Mileage-Calculator/service-worker.js",
     "static/css/main.7d15da53.chunk.css.map": "/Mileage-Calculator/static/css/main.7d15da53.chunk.css.map",
-    "static/js/2.b6b67544.chunk.js.LICENSE.txt": "/Mileage-Calculator/static/js/2.b6b67544.chunk.js.LICENSE.txt"
+    "static/js/2.6cf8d9aa.chunk.js.LICENSE.txt": "/Mileage-Calculator/static/js/2.6cf8d9aa.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.1eaaa597.js",
-    "static/js/2.b6b67544.chunk.js",
+    "static/js/2.6cf8d9aa.chunk.js",
     "static/css/main.7d15da53.chunk.css",
-    "static/js/main.e7869bfd.chunk.js"
+    "static/js/main.ed7ce462.chunk.js"
   ]
 }
