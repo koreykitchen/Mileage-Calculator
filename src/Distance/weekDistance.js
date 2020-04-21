@@ -9,7 +9,9 @@ class WeekDistance extends React.Component
         super(props);
 
         this.state = {  loaded: false, arrayOfResults: new Array(7).fill(null),
-                        callbacksToStoreResults: this.generateCallbacksToStoreResults() }; 
+                        callbacksToStoreResults: this.generateCallbacksToStoreResults(),
+                        daysMilesArray: new Array(7).fill(0),
+                        callbacksToStoreDaysMiles: this.generateCallbacksToStoreDaysMiles() }; 
     }
 
     componentDidMount()
@@ -64,13 +66,27 @@ class WeekDistance extends React.Component
 
         else
         {
-            return new Array(7).fill(null).map((_, dayIndex) => 
+            var dayDistanceElementArray = 
+                new Array(7).fill(null).map((_, dayIndex) => 
                 (
                     <DayDistance    key={dayIndex} dayIndex={dayIndex} 
                                     dayData={this.props.arrayOfDaysData[dayIndex]}
                                     dayResults={this.state.arrayOfResults[dayIndex]}
-                                    callbackToStoreResults={this.state.callbacksToStoreResults[dayIndex]} />
+                                    callbackToStoreResults={this.state.callbacksToStoreResults[dayIndex]}
+                                    callbackToStoreDaysMiles={this.state.callbacksToStoreDaysMiles[dayIndex]} />
                 ));
+
+            return (
+
+                <div>
+
+                    <p style={{textAlign: 'center', fontWeight: 'bold'}}>
+                        {"Total Miles: " + this.calculateWeeksTotalMiles()}</p>
+
+                    {dayDistanceElementArray}
+
+                </div>
+            );
         }
     }
 
@@ -100,6 +116,37 @@ class WeekDistance extends React.Component
         tempArrayOfResults[index] = result;
 
         this.setState({ arrayOfResults: tempArrayOfResults });
+    }
+
+    calculateWeeksTotalMiles()
+    {
+        var totalMiles = 0;
+
+        for(var daysMiles of this.state.daysMilesArray)
+        {
+            totalMiles += daysMiles;
+        }
+
+        return totalMiles;
+    }
+
+    storeDaysTotalMiles(numberOfMiles, dayIndex)
+    {
+        var tempDaysMilesArray = [...this.state.daysMilesArray];
+
+        tempDaysMilesArray[dayIndex] = numberOfMiles;
+
+        this.setState({ daysMilesArray: tempDaysMilesArray });
+    }
+
+    generateCallbacksToStoreDaysMiles()
+    {
+        return new Array(7).fill(null)
+            .map((_, dayIndex) => 
+                (
+                    (numberOfMiles) => this.storeDaysTotalMiles(numberOfMiles, dayIndex)
+                )
+            );
     }
 }
 
