@@ -1,12 +1,15 @@
 import React from 'react';
 
+import DayDistance from './dayDistance.js';
+
 class WeekDistance extends React.Component
 {
     constructor(props)
     {
         super(props);
 
-        this.state = { content: "LOADING..." }; 
+        this.state = {  loaded: false, arrayOfResults: new Array(7).fill(null),
+                        callbacksToStoreResults: this.generateCallbacksToStoreResults() }; 
     }
 
     componentDidMount()
@@ -20,20 +23,20 @@ class WeekDistance extends React.Component
             scriptElement.src = "https://maps.googleapis.com/maps/api/js?" + 
                                 "key=AIzaSyASFAgyRK86Z88JTF_LlbtUsLTmw0_eNdI";
 
-            scriptElement.onload = this.callbackToRequestMileageCalculation;
+            scriptElement.onload = this.callbackToSetAsLoaded;
 
             document.body.appendChild(scriptElement);
         }
 
         else
         {
-            this.requestMileageCalculation();
+            this.setState({ loaded: true });
         }
     }
 
-    callbackToRequestMileageCalculation()
+    callbackToSetAsLoaded()
     {
-        window.distanceElement.requestMileageCalculation();
+        window.distanceElement.setState({ loaded: true });
     }
 
     render()
@@ -44,64 +47,59 @@ class WeekDistance extends React.Component
 
                 <button onClick={() => 
                     (this.props.swapWeekOrDistanceDisplay())}>Go Back</button>
-                
-                <p>{this.state.content}</p>
+
+                {this.displayLoadingOrDayDistanceElements()}
                 
             </div>
             
         );
     }
 
-    requestMileageCalculation()
+    displayLoadingOrDayDistanceElements()
     {
-        var dayIndex = 0;
-
-        if((this.props.arrayOfDaysData[dayIndex].length >= 2) && 
-                ((this.props.arrayOfDaysData[dayIndex].length <= 20))) 
+        if(!this.state.loaded)
         {
-            var directionsService = new window.google.maps.DirectionsService();
-
-            directionsService.route(this.buildUpMileageRequestForDay(dayIndex), 
-                                    this.callbackToStoreCalculatedDistance);
+            return (<p>LOADING...</p>);
         }
 
         else
         {
-            this.setState({ content: "Sunday's number of stores must be between 2 and 20..." });
+            return new Array(7).fill(null).map((_, dayIndex) => 
+                (
+                    <DayDistance    key={dayIndex} dayIndex={dayIndex} 
+                                    dayData={this.props.arrayOfDaysData[dayIndex]}
+                                    dayResults={this.state.arrayOfResults[dayIndex]}
+                                    callbackToStoreResults={this.state.callbacksToStoreResults[dayIndex]} />
+                ));
         }
     }
 
-    buildUpMileageRequestForDay(dayIndex)
+    generateCallbacksToStoreResults()
     {
-        var startLocation = this.props.arrayOfDaysData[dayIndex][0].Address + "," +
-                            this.props.arrayOfDaysData[dayIndex][0].City;
-
-        var endLocation =   this.props.arrayOfDaysData[dayIndex][1].Address + "," +
-                            this.props.arrayOfDaysData[dayIndex][1].City;
-
-        var mileageRequest = { origin: startLocation, destination: endLocation, travelMode: 'DRIVING'};
-
-        return mileageRequest;
+        return new Array(7).fill(null).map((_, dayIndex) => 
+        (
+            (result, status) => 
+            (
+                this.storeCalculatedDistance(result, status, dayIndex)
+            )
+        ));
     }
 
-    callbackToStoreCalculatedDistance(result, status)
+    storeCalculatedDistance(result, status, index)
     {
         if (status === 'OK') 
         {
-            window.distanceElement.storeCalculatedDistance(result);
+            window.distanceElement.storeResults(result, index);
         }
     }
 
-    storeCalculatedDistance(result)
+    storeResults(result, index)
     {
-        this.setState({ content: ("Distance between Sunday's first two stops: " + 
-            this.convertMetersToMiles(result.routes[0].legs[0].distance.value) + 
-            " miles...") });
-    }
+        var tempArrayOfResults = [...this.state.arrayOfResults];
 
-    convertMetersToMiles(meters)
-    {
-        return (Math.round((meters * 0.000621371) * 10) / 10);
+        tempArrayOfResults[index] = result;
+
+        this.setState({ arrayOfResults: tempArrayOfResults });
     }
 }
 
