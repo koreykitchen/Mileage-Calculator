@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "9c08b3b67af1fdad9122e633f310b3c6",
+    "revision": "159f2463e6af3084577ab683282074d3",
     "url": "/Mileage-Calculator/index.html"
   },
   {
-    "revision": "fcb9f2dd9c6c4f62499e",
+    "revision": "1120c2ea4711790323ac",
     "url": "/Mileage-Calculator/static/css/main.7d15da53.chunk.css"
   },
   {
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/Mileage-Calculator/static/js/2.b6b67544.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "fcb9f2dd9c6c4f62499e",
-    "url": "/Mileage-Calculator/static/js/main.6ca581cc.chunk.js"
+    "revision": "1120c2ea4711790323ac",
+    "url": "/Mileage-Calculator/static/js/main.e7869bfd.chunk.js"
   },
   {
     "revision": "382d964305a3b05d4bdf",
