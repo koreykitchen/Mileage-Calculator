@@ -17,7 +17,7 @@ class Location extends React.Component
                 {this.props.storeData.Name + ' - ' + this.props.storeData.Address +
                     ' - ' + this.props.storeData.City}
 
-                <button onClick={() => (this.props.removeStore())} 
+                <button onClick={() => (this.props.removeStore(this.props.dayIndex, this.props.locationIndex))} 
                         style={{color: 'red', float: 'right'}}>Remove</button>
 
             </div>

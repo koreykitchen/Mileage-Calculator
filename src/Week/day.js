@@ -37,10 +37,10 @@ class Day extends React.Component
                     .fill(null)
                     .map((_, index) => 
                             (<Location  key={index} 
+                                        locationIndex={index}
+                                        dayIndex={this.props.currentDayIndex}
                                         storeData={daysData[index]}
-                                        removeStore={() => 
-                                            (this.props.removeLocationFunctions[this.props.currentDayIndex]
-                                                [index]())} />));
+                                        removeStore={this.props.removeStore} />));
         }
     }
 }

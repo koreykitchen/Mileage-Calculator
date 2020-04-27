@@ -11,6 +11,10 @@ class Main extends React.Component
     super(props);
 
     this.state = { weekDisplayed: true,  arrayOfDaysData: new Array(7).fill([])};
+
+    this.addStore = this.addStore.bind(this);
+
+    this.removeStore = this.removeStore.bind(this);
   }
 
   render() 
@@ -39,8 +43,8 @@ class Main extends React.Component
       return (<Week storeListData={this.props.storeListData}
                     arrayOfDaysData={this.state.arrayOfDaysData}
                     swapWeekOrDistanceDisplay={() => this.swapWeekOrDistanceDisplay()}
-                    addLocationFunctions={this.generateAddLocationFunctions()}
-                    removeLocationFunctions={this.generateRemoveLocationFunctions()} />);
+                    addStore={this.addStore}
+                    removeStore={this.removeStore} />);
     }
 
     else
@@ -80,30 +84,6 @@ class Main extends React.Component
     tempArrayOfDaysData[dayIndex] = tempDaysData;
 
     this.setState({arrayOfDaysData: tempArrayOfDaysData});
-  }
-
-  generateAddLocationFunctions()
-  {
-    return new Array(7).fill(null).map((_, dayIndex) =>
-            (
-                new Array(this.props.storeListData.length)
-                    .fill(null).map((_, storeToAddIndex) => 
-                    (
-                        () => this.addStore(dayIndex, this.props.storeListData[storeToAddIndex])
-                    ))
-            ));
-  }
-
-  generateRemoveLocationFunctions()
-  {
-    return new Array(7).fill(null).map((_, dayIndex) =>
-            (
-                new Array(this.state.arrayOfDaysData[dayIndex].length)
-                    .fill(null).map((_, storeToRemoveIndex) => 
-                    (
-                        () => this.removeStore(dayIndex, storeToRemoveIndex)
-                    ))
-            ));
   }
 }
 

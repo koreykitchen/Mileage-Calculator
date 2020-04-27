@@ -14,6 +14,8 @@ class Week extends React.Component
 
         this.arrayOfDayNames =  ["Sunday", "Monday", "Tuesday", "Wednesday",
                                  "Thursday", "Friday", "Saturday"];
+
+        this.weekdayTabs = this.setupWeekdayTabs();
     }
 
     render() 
@@ -21,21 +23,19 @@ class Week extends React.Component
         return (
             <div className="bordered-div">
 
-                {this.setupWeekdayTabs()}
+                {this.weekdayTabs}
 
                 <button onClick={() => (this.props.swapWeekOrDistanceDisplay())}  
                         style={{marginLeft:'25px'}}>Total Mileage</button>
 
                 <LocationSelect currentDay={this.state.currentDay}
-                                currentDayIndex={this.arrayOfDayNames.findIndex((day) => 
-                                    (day === this.state.currentDay))}
+                                currentDayIndex={this.getDaysIndex(this.state.currentDay)}
                                 storeListData={this.props.storeListData} 
-                                addLocationFunctions={this.props.addLocationFunctions}/>
+                                addStore={this.props.addStore}/>
 
-                <Day    currentDayIndex={this.arrayOfDayNames.findIndex((day) => 
-                            (day === this.state.currentDay))}
+                <Day    currentDayIndex={this.getDaysIndex(this.state.currentDay)}
                         currentDaysData={this.getDaysData(this.state.currentDay)} 
-                        removeLocationFunctions={this.props.removeLocationFunctions} /> 
+                        removeStore={this.props.removeStore} /> 
 
             </div>
         );
@@ -46,6 +46,11 @@ class Week extends React.Component
         var dayIndex = this.arrayOfDayNames.findIndex((day) => (day === dayToGetDataFor));
 
         return this.props.arrayOfDaysData[dayIndex];
+    }
+
+    getDaysIndex(dayName)
+    {
+        return this.arrayOfDayNames.findIndex((day) => (day === this.state.currentDay));
     }
 
     setupWeekdayTabs()

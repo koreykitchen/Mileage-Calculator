@@ -11,11 +11,13 @@ class Data extends React.Component
         super(props);
 
         this.state = { storeListData: [], dataHasBeenLoaded: false }; 
+
+        this.callbackFunctionToStoreData = this.callbackFunctionToStoreData.bind(this);
     }
 
     componentDidMount()
     {
-        this.getStoreListData(this.callbackFunctionToStoreData, this);
+        this.getStoreListData(this.callbackFunctionToStoreData);
     }
 
     render()
@@ -31,7 +33,7 @@ class Data extends React.Component
         }
     }
 
-    getStoreListData(callbackFunction, dataClassObject)
+    getStoreListData(callbackFunction)
     {
         var request = new XMLHttpRequest();
 
@@ -41,13 +43,13 @@ class Data extends React.Component
 
         request.onload = function() 
         {
-            callbackFunction(request.response, dataClassObject);
+            callbackFunction(request.response);
         };
 
         request.send();
     }
 
-    callbackFunctionToStoreData(dataToStore, dataClassObject)
+    callbackFunctionToStoreData(dataToStore)
     {
         var rawData = new Uint8Array(dataToStore);
 
@@ -80,7 +82,7 @@ class Data extends React.Component
                                     }
                                 );
 
-        dataClassObject.setState({ storeListData: jsonStoreListData, dataHasBeenLoaded: true });
+        this.setState({ storeListData: jsonStoreListData, dataHasBeenLoaded: true });
     }
 }
 

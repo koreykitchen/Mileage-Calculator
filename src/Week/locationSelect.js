@@ -6,12 +6,9 @@ class LocationSelect extends React.Component
   {
     super(props);
 
-    this.state = { loaded: false };
-  }
+    this.state = {  };
 
-  componentDidMount()
-  {
-    this.setState({ loaded: true });
+    this.selectElementOptions = this.populateSelectElement();
   }
 
   render() 
@@ -24,12 +21,13 @@ class LocationSelect extends React.Component
 
           <select id='locationSelectElement' style={{width:'75vw'}}>
 
-            {this.populateSelectElement()}
+            {this.selectElementOptions}
 
           </select>
 
           <button onClick={() => 
-                    (this.props.addLocationFunctions[this.props.currentDayIndex][this.getSelectedIndex()]())} 
+                    (this.props.addStore(this.props.currentDayIndex, 
+                      this.props.storeListData[this.getSelectedIndex()]))} 
                   style={{marginLeft: '25px'}}>Add Store</button>
 
         </div>

@@ -12,6 +12,8 @@ class WeekDistance extends React.Component
                         callbacksToStoreResults: this.generateCallbacksToStoreResults(),
                         daysMilesArray: new Array(7).fill(0),
                         callbacksToStoreDaysMiles: this.generateCallbacksToStoreDaysMiles() }; 
+
+        this.callbackToSetAsLoaded = this.callbackToSetAsLoaded.bind(this);
     }
 
     componentDidMount()
@@ -38,7 +40,7 @@ class WeekDistance extends React.Component
 
     callbackToSetAsLoaded()
     {
-        window.distanceElement.setState({ loaded: true });
+        this.setState({ loaded: true });
     }
 
     render()
@@ -127,7 +129,7 @@ class WeekDistance extends React.Component
             totalMiles += daysMiles;
         }
 
-        return totalMiles;
+        return (Math.round((totalMiles * 10)) / 10);
     }
 
     storeDaysTotalMiles(numberOfMiles, dayIndex)
