@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/Mileage-Calculator/precache-manifest.c67e09395d35d84962538634d110de2f.js"
+  "/Mileage-Calculator/precache-manifest.e28ec6190c31bf891a25e91818b28aeb.js"
 );
 
 self.addEventListener('message', (event) => {
