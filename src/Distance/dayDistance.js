@@ -9,6 +9,8 @@ class DayDistance extends React.Component
         super(props);
 
         this.state = { content: "LOADING...", loaded: false, totalMiles: 0 }; 
+
+        this.callbackToStoreResults = this.callbackToStoreResults.bind(this);
     }
 
     componentDidMount()
@@ -56,7 +58,7 @@ class DayDistance extends React.Component
             var directionsService = new window.google.maps.DirectionsService();
 
             directionsService.route(this.buildUpMileageRequestForDay(), 
-                                    this.props.callbackToStoreResults);
+                                    this.callbackToStoreResults);
         }
 
         else
@@ -89,6 +91,14 @@ class DayDistance extends React.Component
         return mileageRequest;
     }
 
+    callbackToStoreResults(result, status)
+    {
+        if (status === 'OK') 
+        {
+            this.props.callbackToStoreResults(result, this.props.dayIndex);
+        }
+    }
+
     storeResults(result)
     {
         var legDistanceElementArray = 
@@ -113,7 +123,7 @@ class DayDistance extends React.Component
             totalMeters += legResult.distance.value;
         }
 
-        this.props.callbackToStoreDaysMiles(this.convertMetersToMiles(totalMeters));
+        this.props.storeDaysTotalMiles(this.convertMetersToMiles(totalMeters), this.props.dayIndex);
 
         return this.convertMetersToMiles(totalMeters);
     }
@@ -130,7 +140,6 @@ class DayDistance extends React.Component
 
         return arrayOfDayNames[dayIndex];
     }
-
 }
 
 export default DayDistance;

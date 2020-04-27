@@ -9,11 +9,13 @@ class WeekDistance extends React.Component
         super(props);
 
         this.state = {  loaded: false, arrayOfResults: new Array(7).fill(null),
-                        callbacksToStoreResults: this.generateCallbacksToStoreResults(),
-                        daysMilesArray: new Array(7).fill(0),
-                        callbacksToStoreDaysMiles: this.generateCallbacksToStoreDaysMiles() }; 
+                        daysMilesArray: new Array(7).fill(0) }; 
 
         this.callbackToSetAsLoaded = this.callbackToSetAsLoaded.bind(this);
+
+        this.storeResults = this.storeResults.bind(this);
+
+        this.storeDaysTotalMiles = this.storeDaysTotalMiles.bind(this);
     }
 
     componentDidMount()
@@ -74,8 +76,8 @@ class WeekDistance extends React.Component
                     <DayDistance    key={dayIndex} dayIndex={dayIndex} 
                                     dayData={this.props.arrayOfDaysData[dayIndex]}
                                     dayResults={this.state.arrayOfResults[dayIndex]}
-                                    callbackToStoreResults={this.state.callbacksToStoreResults[dayIndex]}
-                                    callbackToStoreDaysMiles={this.state.callbacksToStoreDaysMiles[dayIndex]} />
+                                    callbackToStoreResults={this.storeResults}
+                                    storeDaysTotalMiles={this.storeDaysTotalMiles} />
                 ));
 
             return (
@@ -89,25 +91,6 @@ class WeekDistance extends React.Component
 
                 </div>
             );
-        }
-    }
-
-    generateCallbacksToStoreResults()
-    {
-        return new Array(7).fill(null).map((_, dayIndex) => 
-        (
-            (result, status) => 
-            (
-                this.storeCalculatedDistance(result, status, dayIndex)
-            )
-        ));
-    }
-
-    storeCalculatedDistance(result, status, index)
-    {
-        if (status === 'OK') 
-        {
-            window.distanceElement.storeResults(result, index);
         }
     }
 
@@ -139,16 +122,6 @@ class WeekDistance extends React.Component
         tempDaysMilesArray[dayIndex] = numberOfMiles;
 
         this.setState({ daysMilesArray: tempDaysMilesArray });
-    }
-
-    generateCallbacksToStoreDaysMiles()
-    {
-        return new Array(7).fill(null)
-            .map((_, dayIndex) => 
-                (
-                    (numberOfMiles) => this.storeDaysTotalMiles(numberOfMiles, dayIndex)
-                )
-            );
     }
 }
 
